@@ -32,28 +32,21 @@ assert p > 0 and p <= 1
 r = 0.02  # arbitrary
 assert r > 0 and r < 1
 
-# Our volatility
-sigma = 1.5
-
 
 class Node:
     """
+    A node in a binomial tree.
+
     Some of the material used:
     * https://www.youtube.com/watch?v=AukJ1gDeErw
     * https://www.youtube.com/watch?v=eA5AtTx3rRI
     * https://www.youtube.com/watch?v=TynVUrat0nY
     * https://www.youtube.com/watch?v=PZrmOh2nZus
     """
-    parent = None
+    parentnode = None
     stockvalue: float = None
-
-
     __upnode = None
     __downnode = None
-    __S_n: float = 0.0
-    __K: float = 0.0
-    __iscall: bool = True
-    S_0 = 40
 
 
     def __init__(stockvalue, strikeprice, up_node, down_node):
@@ -68,7 +61,7 @@ class Node:
 
         if not self.__upnode:
             assert not self.__downnode, "Both children should be None."
-            # We're a leaf
+            # We're a leaf.
 
             # (We for now assume we're a call option.)
             # We know our value because the stock value and strike price is
@@ -97,61 +90,18 @@ class Node:
         return call_value
 
 
-    def binomial_value(self) -> float:
-        """We want to compute the option value."""
-
-        # delta is the amount of shares we need to buy.
-        delta: float = 0
-
-        S_up =  # __upnode.binomial_value(1)
-        S_down =  # __downnode.binomial_value(1)
-
-        # Strike price of option.
-        X
-
-        # The call value is the stock's current value, S, minus strike price.
-        option_value: float = None
-
-        if not __upnode:
-            assert not __downnode, "Both children should be None."
-            # We're a leaf, the last node.
-            option_value = 
-        else:
-
-
-        S - X
-
-        V_up = delta * S_up - max(c_up, 0)
-        V_down = delta * S_down - max(call_value, 0)
-
-        # This is the requirement for a riskless portfolio: V_up == V_down
-
-        delta * S_up == delta * S_down - max(call_value, 0) + max(c_up, 0)
-
-
-
-        # TODO discount
-        #return p * self.__upnode.binomial_value() + \
-               #(1 - p) * self.__downnode.binomial_value()
-
-        #if self.__iscall:
-            #return max(self.__S_n - self.__K, 0)
-        #else:
-            #return max(self.__K - self.__S_n, 0)
-
-
 def main() -> None:
     # 1. We build the tree and specify our data.
     nu = Node(stockvalue = 48, strikeprice = 38, None, None)
     nd = Node(stockvalue = 30, strikeprice = 38, None, None)
     np = Node(stockvalue = 40, strikeprice = 38, nu, nd)
-    nu.parent = np
-    nd.parent = np
+    nu.parentnode = np
+    nd.parentnode = np
 
     # 2. We compute our result
-    bv = node.binomial_value(t=0)
+    call_value = np.option_value()
 
-    print(f"The Binomial Value is {bv}.")
+    print(f"The option value is {call_value}.")
 
     pass
 
