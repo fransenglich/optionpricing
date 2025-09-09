@@ -1,31 +1,33 @@
 import numpy as np
 
+"""
+A Monte Carlo pricing of an option.
+
+Fixed:
+    * Discount rate is risk-free, r = 0.05
+    * 2 time periods, t = 0 and t = 1
+    * Strike price = 38
+    * Underlying asset price, S_t:
+        - t=0: 40
+        - t=1: 48 or 30
+
+    * 2 possible states (?)
+
+Doesn't matter:
+    * Probabilities of movements of underlying asset.
+
+Assumptions:
+    * S_t is lognormal distributed: S_t ~ LN(μ, σ)
+
+We simulate:
+    * ?
+"""
+
 
 def monte_carlo_pricing() -> None:
     """
-    A Monte Carlo pricing of an option.
-
-    Fixed:
-        * Discount rate is risk-free, r = 0.05
-        * 2 time periods, t = 0 and t = 1
-        * Strike price = 38
-        * Underlying asset price, S_t:
-            - t=0: 40
-            - t=1: 48 or 30
-
-        * 2 possible states (?)
-
-    Doesn't matter:
-        * Probabilities of movements of underlying asset.
-
-    Assumptions:
-        * S_t is lognormal distributed: S_t ~ LN(μ, σ)
-
-    We simulate:
-        * ?
-
-    Some of the material used:
-    * https://intro.quantecon.org/monte_carlo.html
+    A simple Monte Carlo simulation, essentially based on:
+    https://intro.quantecon.org/monte_carlo.html
     """
 
     # The asset's mean
