@@ -89,7 +89,12 @@ class Node:
         # We discount one time period.
         PV = V / (1 + r)
 
-        return 
+        # The amount of the stock value.
+        owned_stockvalue = delta * self.stockvalue
+
+        call_value = owned_stockvalue - PV
+
+        return call_value
 
 
     def binomial_value(self) -> float:
