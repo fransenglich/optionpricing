@@ -24,20 +24,14 @@
 #
 # You need to take into account discounting
 
-# The probability of the asset in the binomial tree.
-p = 0.7  # arbitrary
-assert p > 0 and p <= 1
-
-# Our discount rate. risk-free, corresponding to the life of the option.
-r = 0.02  # arbitrary
-assert r > 0 and r < 1
-
-
-class Node:
+class BinomialNode:
     """
-    A node in a binomial tree.
+    A node in a binomial tree for option pricing.
+
+    It has been tested for two time periods, t=0 and t=1.
 
     Some of the material used:
+    * Options, Futures and Other Derivatives. John C. Hull (2022)
     * https://www.youtube.com/watch?v=AukJ1gDeErw
     * https://www.youtube.com/watch?v=eA5AtTx3rRI
     * https://www.youtube.com/watch?v=TynVUrat0nY
@@ -49,13 +43,16 @@ class Node:
     __downnode = None
 
     def __init__(self, stockvalue, strikeprice, upnode, downnode):
+        """A vanilla init function."""
+
         self.stockvalue = stockvalue
         self.__strikeprice = strikeprice
         self.__upnode = upnode
         self.__downnode = downnode
 
-    def option_value(self) -> float:
-        """"""
+    def option_price(self) -> float:
+        """Returns the option price for the state this node represent in an
+        binomial tree."""
 
         if not self.__upnode:
             assert not self.__downnode, "Both children should be None."
@@ -64,45 +61,66 @@ class Node:
             # (We for now assume we're a call option.)
             # We know our value because the stock value and strike price is
             # known.
-            return max(self.stockvalue - self.__strikeprice, 0)
+            option_price = max(self.stockvalue - self.__strikeprice, 0)
+            print(f"Leaf, returning option value {option_price}.")
+            return option_price
 
-        call_up = self.__upnode.option_value()
-        call_down = self.__downnode.option_value()
+        call_up = self.__upnode.option_price()
+        call_down = self.__downnode.option_price()
 
         # The amount of shares for our riskless portfolio.
-        delta = (call_up - call_down) / (self.__upnode.stockvalue -
-                                         self.__downnode.stockvalue)
+        amount = (call_up - call_down) / (self.__upnode.stockvalue -
+                                          self.__downnode.stockvalue)
+        print(f"The stock amount is {amount}.")
 
         # The equation for the portfolio value is:
-        # V = delta * stockvalue - option
+        #   V = amount * stockvalue - option
+        # We can choose both call_up and call_down
 
-        V = delta * self.stockvalue - call_up
+        V = amount * self.__upnode.stockvalue - call_up
+        print(f"Portfolio value is {V}.")
 
-        # We discount one time period.
+        # Our discount rate. Risk-free, corresponding to the life of the
+        # option.
+        r = 0.05  # Matches the example in the Youtube video.
+        assert r > 0 and r < 1
+
+        # We discount one time period, to present value.
         PV = V / (1 + r)
 
         # The amount of the stock value.
-        owned_stockvalue = delta * self.stockvalue
+        owned_stockvalue = amount * self.stockvalue
 
         call_value = owned_stockvalue - PV
+        print(f"The option value is {call_value}.")
 
         return call_value
 
 
 def main() -> None:
+    # Let's run on the example in:
+    # https://www.youtube.com/watch?v=AukJ1gDeErw
+
     # 1. We build the tree and specify our data.
-    nu = Node(stockvalue=48, strikeprice=38, upnode=None, downnode=None)
-    nd = Node(stockvalue=30, strikeprice=38, upnode=None, downnode=None)
-    np = Node(stockvalue=40, strikeprice=38, upnode=nu, downnode=nd)
+    nu = BinomialNode(stockvalue=48, strikeprice=38, upnode=None,
+                      downnode=None)
+    nd = BinomialNode(stockvalue=30, strikeprice=38, upnode=None,
+                      downnode=None)
+    np = BinomialNode(stockvalue=40, strikeprice=38, upnode=nu,
+                      downnode=nd)
+
     nu.parentnode = np
     nd.parentnode = np
 
+    # The correct values should be:
+    # up state: option value 10
+    # down state: option value 0
+    # stock amount: 10/18 = 0.55
+    # option price: 6.35
+
     # 2. We compute our result
-    call_value = np.option_value()
-
-    print(f"The option value is {call_value}.")
-
-    pass
+    _ = np.option_price()
+    # The computed values matches the example on Youtube.
 
 
 if __name__ == "__main__":
