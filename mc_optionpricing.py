@@ -28,33 +28,33 @@ Some of the material used:
 * https://intro.quantecon.org/monte_carlo.html
 """
 
-r = 0.05
-
 
 def main() -> None:
-    # Let's run on the example in:
-    # https://www.youtube.com/watch?v=AukJ1gDeErw
-
-    # The correct values should be:
-    # up state: option value 10, stock value 48
-    # down state: option value 0, stock value 30
-    # down state: option value 0
-    # stock amount: 10/18 = 0.55
-    # option price: 6.35
-
-    # 2. We compute our result
-    pass
-
-    # Some sample code copied by Frans:
+    # The asset's mean
     μ = 1.0
+
+    # The asset's standard deviation
     σ = 0.1
+
+    # The option's strike price
+
     K = 1
+
+    # Number of time periods
     n = 10
+
+    # Discounting factor.
     β = 0.95
+
+    # Number of simulations
     M = 10_000  # _000
 
+    # An Mx1-array of asset prices, randomly drawn from normal distribution.
     S = np.exp(μ + σ * np.random.randn(M))
+
+    # An Mx1-array of option returns.
     return_draws = np.maximum(S - K, 0)
+
     P = β ** n * np.mean(return_draws)
 
     print(f"The Monte Carlo option price is approximately {P:3f}")
