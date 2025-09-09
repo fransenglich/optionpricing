@@ -49,11 +49,11 @@ class Node:
     __downnode = None
 
 
-    def __init__(stockvalue, strikeprice, up_node, down_node):
+    def __init__(self, stockvalue, strikeprice, upnode, downnode):
         self.stockvalue = stockvalue
         self.__strikeprice = strikeprice
-        self.__upnode = up_node
-        self.__downnode = up_down
+        self.__upnode = upnode
+        self.__downnode = downnode
 
 
     def option_value(self) -> float:
@@ -92,9 +92,9 @@ class Node:
 
 def main() -> None:
     # 1. We build the tree and specify our data.
-    nu = Node(stockvalue = 48, strikeprice = 38, None, None)
-    nd = Node(stockvalue = 30, strikeprice = 38, None, None)
-    np = Node(stockvalue = 40, strikeprice = 38, nu, nd)
+    nu = Node(stockvalue=48, strikeprice=38, upnode=None, downnode=None)
+    nd = Node(stockvalue=30, strikeprice=38, upnode=None, downnode=None)
+    np = Node(stockvalue=40, strikeprice=38, upnode=nu, downnode=nd)
     nu.parentnode = np
     nd.parentnode = np
 
