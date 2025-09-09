@@ -85,7 +85,7 @@ class BinomialNode:
         r = 0.05  # Matches the example in the Youtube video.
         assert r > 0 and r < 1
 
-        # We discount one time period, to present value.
+        # We discount one time period discretely, to present value.
         PV = V / (1 + r)
 
         # The amount of the stock value.
@@ -113,8 +113,8 @@ def main() -> None:
     nd.parentnode = np
 
     # The correct values should be:
-    # up state: option value 10
-    # down state: option value 0
+    # up state: option value 10, stock value 48
+    # down state: option value 0, stock value 30
     # stock amount: 10/18 = 0.55
     # option price: 6.35
 
