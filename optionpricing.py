@@ -48,13 +48,11 @@ class Node:
     __upnode = None
     __downnode = None
 
-
     def __init__(self, stockvalue, strikeprice, upnode, downnode):
         self.stockvalue = stockvalue
         self.__strikeprice = strikeprice
         self.__upnode = upnode
         self.__downnode = downnode
-
 
     def option_value(self) -> float:
         """"""
@@ -72,12 +70,13 @@ class Node:
         call_down = self.__downnode.option_value()
 
         # The amount of shares for our riskless portfolio.
-        delta = (call_up - call_down) / (self.__upnode.stockvalue - self.__downnode.stockvalue)
+        delta = (call_up - call_down) / (self.__upnode.stockvalue -
+                                         self.__downnode.stockvalue)
 
         # The equation for the portfolio value is:
         # V = delta * stockvalue - option
 
-        V = delta * self.stockvalue  - call_up
+        V = delta * self.stockvalue - call_up
 
         # We discount one time period.
         PV = V / (1 + r)
