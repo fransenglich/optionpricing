@@ -37,7 +37,6 @@ def main() -> None:
     σ = 0.1
 
     # The option's strike price
-
     K = 1
 
     # Number of time periods
@@ -49,12 +48,13 @@ def main() -> None:
     # Number of simulations
     M = 10_000  # _000
 
-    # An Mx1-array of asset prices, randomly drawn from normal distribution.
+    # An Mx1-array of asset prices, randomly drawn from normal distribution
     S = np.exp(μ + σ * np.random.randn(M))
 
-    # An Mx1-array of option returns.
+    # An Mx1-array of option returns
     return_draws = np.maximum(S - K, 0)
 
+    # The mean (expected) option price
     P = β ** n * np.mean(return_draws)
 
     print(f"The Monte Carlo option price is approximately {P:3f}")
