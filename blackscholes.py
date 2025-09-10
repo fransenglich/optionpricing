@@ -20,6 +20,8 @@ def black_scholes(asset_price: float,
 
     d2 = d1 - volatility * np.sqrt(time_expiration)
 
+    # Note: We use the CDF, not a random Gaussian dist., because we're closed
+    # form. See Hull (2022), page 353.
     C = asset_price * norm.cdf(d1) - \
         strike_price * np.exp(-risk_free * time_expiration) \
         * norm.cdf(d2)
