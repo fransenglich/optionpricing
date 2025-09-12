@@ -28,21 +28,22 @@ class BinomialNode:
     """
     A node in a binomial tree for option pricing.
 
-    It has two public variables, and the central member function
+    It has the public variable stockvalue, and the central member function
     option_price().
 
-    It has been tested for two time periods, t=0 and t=1.
+    It has been verified for two time periods, t=0 and t=1.
 
     Some of the material used:
+
     * Options, Futures and Other Derivatives. John C. Hull (2022)
     * https://www.youtube.com/watch?v=AukJ1gDeErw
     * https://www.youtube.com/watch?v=eA5AtTx3rRI
     * https://www.youtube.com/watch?v=TynVUrat0nY
     * https://www.youtube.com/watch?v=PZrmOh2nZus
     """
-    parentnode = None
     stockvalue: float = None
 
+    __strikeprice: float = None
     __upnode = None
     __downnode = None
 
@@ -115,9 +116,6 @@ def main() -> None:
     np = BinomialNode(stockvalue=40, strikeprice=38, upnode=nu,
                       downnode=nd)
 
-    nu.parentnode = np
-    nd.parentnode = np
-
     # The correct values should be:
     # up state: option value 10, stock value 48
     # down state: option value 0, stock value 30
@@ -134,6 +132,7 @@ def main() -> None:
     # We run the example in Hull (2022) p. 295, figure 13.4.
 
     # 1. We build the tree and specify our data/nodes.
+    # Note that node E has two parents, B and C.
     nD = BinomialNode(stockvalue=24.2,
                       strikeprice=21,
                       upnode=None,
