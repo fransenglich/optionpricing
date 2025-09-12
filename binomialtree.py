@@ -38,7 +38,6 @@ class BinomialNode:
     * Options, Futures and Other Derivatives. John C. Hull (2022)
     * https://www.youtube.com/watch?v=AukJ1gDeErw
     * https://www.youtube.com/watch?v=eA5AtTx3rRI
-    * https://www.youtube.com/watch?v=TynVUrat0nY
     * https://www.youtube.com/watch?v=PZrmOh2nZus
     """
 
