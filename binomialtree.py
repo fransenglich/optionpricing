@@ -41,15 +41,18 @@ class BinomialNode:
     * https://www.youtube.com/watch?v=TynVUrat0nY
     * https://www.youtube.com/watch?v=PZrmOh2nZus
     """
+
     stockvalue: float = None
 
+    __name: str = ""
     __strikeprice: float = None
     __upnode = None
     __downnode = None
 
-    def __init__(self, stockvalue, strikeprice, upnode, downnode):
+    def __init__(self, name, stockvalue, strikeprice, upnode, downnode):
         """A vanilla init function."""
 
+        self.__name = name
         self.stockvalue = stockvalue
         self.__strikeprice = strikeprice
         self.__upnode = upnode
@@ -67,7 +70,8 @@ class BinomialNode:
             # We know our value because the stock value and strike price is
             # known.
             option_price = max(self.stockvalue - self.__strikeprice, 0)
-            print(f"Leaf, returning option value {option_price}.")
+            print(f"{self.__name}: "
+                  "Leaf, returning option value {option_price}.")
             return option_price
 
         call_up = self.__upnode.option_price()
@@ -76,14 +80,14 @@ class BinomialNode:
         # The amount of shares for our riskless portfolio.
         amount = (call_up - call_down) / (self.__upnode.stockvalue -
                                           self.__downnode.stockvalue)
-        print(f"The stock amount is {amount}.")
+        print(f"{self.__name}: The stock amount is {amount}.")
 
         # The equation for the portfolio value is:
         #   V = amount * stockvalue - option
         # We can choose both call_up and call_down
 
         V = amount * self.__upnode.stockvalue - call_up
-        print(f"Portfolio value is {V}.")
+        print(f"{self.__name}: Portfolio value is {V}.")
 
         # Our discount rate. Risk-free, corresponding to the life of the
         # option.
@@ -97,7 +101,7 @@ class BinomialNode:
         owned_stockvalue = amount * self.stockvalue
 
         call_value = owned_stockvalue - PV
-        print(f"The option value is {call_value}.")
+        print(f"{self.__name}: The option value is {call_value}.")
 
         return call_value
 
@@ -109,11 +113,11 @@ def main() -> None:
     # https://www.youtube.com/watch?v=AukJ1gDeErw
 
     # 1. We build the tree and specify our data/nodes.
-    nu = BinomialNode(stockvalue=48, strikeprice=38, upnode=None,
+    nu = BinomialNode("U", stockvalue=48, strikeprice=38, upnode=None,
                       downnode=None)
-    nd = BinomialNode(stockvalue=30, strikeprice=38, upnode=None,
+    nd = BinomialNode("D", stockvalue=30, strikeprice=38, upnode=None,
                       downnode=None)
-    np = BinomialNode(stockvalue=40, strikeprice=38, upnode=nu,
+    np = BinomialNode("P", stockvalue=40, strikeprice=38, upnode=nu,
                       downnode=nd)
 
     # The correct values should be:
@@ -133,27 +137,33 @@ def main() -> None:
 
     # 1. We build the tree and specify our data/nodes.
     # Note that node E has two parents, B and C.
-    nD = BinomialNode(stockvalue=24.2,
+    nD = BinomialNode("D",
+                      stockvalue=24.2,
                       strikeprice=21,
                       upnode=None,
                       downnode=None)
-    nE = BinomialNode(stockvalue=19.8,
+    nE = BinomialNode("E",
+                      stockvalue=19.8,
                       strikeprice=21,
                       upnode=None,
                       downnode=None)
-    nF = BinomialNode(stockvalue=16.2,
+    nF = BinomialNode("F",
+                      stockvalue=16.2,
                       strikeprice=21,
                       upnode=None,
                       downnode=None)
-    nB = BinomialNode(stockvalue=22,
+    nB = BinomialNode("B",
+                      stockvalue=22,
                       strikeprice=21,
                       upnode=nD,
                       downnode=nE)
-    nC = BinomialNode(stockvalue=18,
+    nC = BinomialNode("C",
+                      stockvalue=18,
                       strikeprice=21,
                       upnode=nE,
                       downnode=nF)
-    nA = BinomialNode(stockvalue=20,
+    nA = BinomialNode("A",
+                      stockvalue=20,
                       strikeprice=21,
                       upnode=nB,
                       downnode=nC)
@@ -161,7 +171,7 @@ def main() -> None:
     # 2. We compute our result
     nA_optionprice = nA.option_price()
 
-    print(f"Option price: {nA_optionprice}")
+    print(f"Option price, Hull (2022): {nA_optionprice}")
 
 
 if __name__ == "__main__":
