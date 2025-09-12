@@ -113,11 +113,20 @@ def main() -> None:
     # https://www.youtube.com/watch?v=AukJ1gDeErw
 
     # 1. We build the tree and specify our data/nodes.
-    nu = BinomialNode("U", stockvalue=48, strikeprice=38, upnode=None,
+    nu = BinomialNode("U",
+                      stockvalue=48,
+                      strikeprice=38,
+                      upnode=None,
                       downnode=None)
-    nd = BinomialNode("D", stockvalue=30, strikeprice=38, upnode=None,
+    nd = BinomialNode("D",
+                      stockvalue=30,
+                      strikeprice=38,
+                      upnode=None,
                       downnode=None)
-    np = BinomialNode("P", stockvalue=40, strikeprice=38, upnode=nu,
+    np = BinomialNode("P",
+                      stockvalue=40,
+                      strikeprice=38,
+                      upnode=nu,
                       downnode=nd)
 
     # The correct values should be:
