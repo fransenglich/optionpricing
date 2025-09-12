@@ -28,6 +28,9 @@ class BinomialNode:
     """
     A node in a binomial tree for option pricing.
 
+    It has two public variables, and the central member function
+    option_price().
+
     It has been tested for two time periods, t=0 and t=1.
 
     Some of the material used:
@@ -39,6 +42,7 @@ class BinomialNode:
     """
     parentnode = None
     stockvalue: float = None
+
     __upnode = None
     __downnode = None
 
@@ -98,10 +102,12 @@ class BinomialNode:
 
 
 def main() -> None:
+    print("----------- Call option, one step. --------------")
+
     # Let's run on the example in:
     # https://www.youtube.com/watch?v=AukJ1gDeErw
 
-    # 1. We build the tree and specify our data.
+    # 1. We build the tree and specify our data/nodes.
     nu = BinomialNode(stockvalue=48, strikeprice=38, upnode=None,
                       downnode=None)
     nd = BinomialNode(stockvalue=30, strikeprice=38, upnode=None,
@@ -119,8 +125,44 @@ def main() -> None:
     # option price: 6.35
 
     # 2. We compute our result
-    _ = np.option_price()
+    ytprice = np.option_price()
+
     # The computed values matches the example on Youtube.
+    print(f"Option price for Youtube-example: {ytprice}")
+
+    print("----------- Call option, two steps. --------------")
+    # We run the example in Hull (2022) p. 295, figure 13.4.
+
+    # 1. We build the tree and specify our data/nodes.
+    nD = BinomialNode(stockvalue=24.2,
+                      strikeprice=21,
+                      upnode=None,
+                      downnode=None)
+    nE = BinomialNode(stockvalue=19.8,
+                      strikeprice=21,
+                      upnode=None,
+                      downnode=None)
+    nF = BinomialNode(stockvalue=16.2,
+                      strikeprice=21,
+                      upnode=None,
+                      downnode=None)
+    nB = BinomialNode(stockvalue=22,
+                      strikeprice=21,
+                      upnode=nD,
+                      downnode=nE)
+    nC = BinomialNode(stockvalue=18,
+                      strikeprice=21,
+                      upnode=nE,
+                      downnode=nF)
+    nA = BinomialNode(stockvalue=20,
+                      strikeprice=21,
+                      upnode=nB,
+                      downnode=nC)
+
+    # 2. We compute our result
+    nA_optionprice = nA.option_price()
+
+    print(f"Option price: {nA_optionprice}")
 
 
 if __name__ == "__main__":
