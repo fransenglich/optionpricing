@@ -129,42 +129,6 @@ class BinomialNode:
 
 
 def main() -> None:
-    print("----------- Call option, one step. --------------")
-
-    # Let's run on the example in:
-    # https://www.youtube.com/watch?v=AukJ1gDeErw
-
-    # 1. We build the tree and specify our data/nodes.
-    nu = BinomialNode("U",
-                      stockvalue=48,
-                      strikeprice=38,
-                      r=0.05,
-                      upnode=None,
-                      downnode=None)
-    nd = BinomialNode("D",
-                      stockvalue=30,
-                      strikeprice=38,
-                      r=0.05,
-                      upnode=None,
-                      downnode=None)
-    np = BinomialNode("P",
-                      stockvalue=40,
-                      strikeprice=38,
-                      r=0.05,
-                      upnode=nu,
-                      downnode=nd)
-
-    # The correct values should be:
-    # up state: option value 10, stock value 48
-    # down state: option value 0, stock value 30
-    # stock amount: 10/18 = 0.55
-    # option price: 6.35
-
-    # 2. We compute our result
-    ytprice = np.option_price()
-
-    # The computed values matches the example on Youtube.
-    print(f"Option price for Youtube-example: {ytprice}")
 
     print("----------- Call option, one step Hull fig. 13.1. --------------")
     hull_nu = BinomialNode("U",
@@ -195,7 +159,7 @@ def main() -> None:
     hull_price = hull_np.option_price()
     print(f"Option price for Hull fig. 31.1: {hull_price}")
     # Our computed stock amount, portfolio value and option price
-    # #matches Hull
+    # matches Hull
 
     print("----------- Call option, two steps. --------------")
     # We run the example in Hull (2022) p. 295, figure 13.4.
