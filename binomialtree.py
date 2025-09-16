@@ -48,12 +48,20 @@ class BinomialNode:
     __upnode = None
     __downnode = None
 
-    def __init__(self, name, stockvalue, strikeprice, upnode, downnode):
+    # Our discount rate
+    __r = 0.0
+
+    def __init__(self, name: str, stockvalue: float, strikeprice: float,
+                 r: float, upnode, downnode):
         """A vanilla init function."""
 
         self.__name = name
         self.stockvalue = stockvalue
         self.__strikeprice = strikeprice
+
+        self.__r = r
+        assert self.__r > 0 and self.__r < 1
+
         self.__upnode = upnode
         self.__downnode = downnode
 
@@ -83,18 +91,12 @@ class BinomialNode:
 
         # The equation for the portfolio value is:
         #   V = amount * stockvalue - option
-        # We can choose both call_up and call_down
-
+        # We can choose both call_up or call_down
         V = amount * self.__upnode.stockvalue - call_up
         print(f"{self.__name}: Portfolio value is {V}.")
 
-        # Our discount rate. Risk-free, corresponding to the life of the
-        # option.
-        r = 0.05  # Matches the example in the Youtube video.
-        assert r > 0 and r < 1
-
         # We discount one time period discretely, to present value.
-        PV = V / (1 + r)
+        PV = V / (1 + self.__r)
 
         # The amount of the stock value.
         owned_stockvalue = amount * self.stockvalue
@@ -115,16 +117,19 @@ def main() -> None:
     nu = BinomialNode("U",
                       stockvalue=48,
                       strikeprice=38,
+                      r=0.05,
                       upnode=None,
                       downnode=None)
     nd = BinomialNode("D",
                       stockvalue=30,
                       strikeprice=38,
+                      r=0.05,
                       upnode=None,
                       downnode=None)
     np = BinomialNode("P",
                       stockvalue=40,
                       strikeprice=38,
+                      r=0.05,
                       upnode=nu,
                       downnode=nd)
 
@@ -144,16 +149,19 @@ def main() -> None:
     hull_nu = BinomialNode("U",
                            stockvalue=22,
                            strikeprice=21,
+                           r=0.04,
                            upnode=None,
                            downnode=None)
     hull_nd = BinomialNode("D",
                            stockvalue=18,
                            strikeprice=21,
+                           r=0.04,
                            upnode=None,
                            downnode=None)
     hull_np = BinomialNode("P",
                            stockvalue=20,
                            strikeprice=21,
+                           r=0.04,
                            upnode=hull_nu,
                            downnode=hull_nd)
 
@@ -169,31 +177,37 @@ def main() -> None:
     nD = BinomialNode("D",
                       stockvalue=24.2,
                       strikeprice=21,
+                      r=0.04,
                       upnode=None,
                       downnode=None)
     nE = BinomialNode("E",
                       stockvalue=19.8,
                       strikeprice=21,
+                      r=0.04,
                       upnode=None,
                       downnode=None)
     nF = BinomialNode("F",
                       stockvalue=16.2,
                       strikeprice=21,
+                      r=0.04,
                       upnode=None,
                       downnode=None)
     nB = BinomialNode("B",
                       stockvalue=22,
                       strikeprice=21,
+                      r=0.04,
                       upnode=nD,
                       downnode=nE)
     nC = BinomialNode("C",
                       stockvalue=18,
                       strikeprice=21,
+                      r=0.04,
                       upnode=nE,
                       downnode=nF)
     nA = BinomialNode("A",
                       stockvalue=20,
                       strikeprice=21,
+                      r=0.04,
                       upnode=nB,
                       downnode=nC)
 
