@@ -1,3 +1,5 @@
+import math
+
 
 # Underlying asset moves by factor u or d:
 #   u >= 1
@@ -43,7 +45,7 @@ class BinomialNode:
 
     stockvalue: float = None
 
-    __name: str = ""
+    __name: str
     __strikeprice: float = None
     __upnode = None
     __downnode = None
@@ -51,8 +53,11 @@ class BinomialNode:
     # The discount rate
     __r = 0.0
 
+    # Whether to compound continously or discretely.
+    __discrete: bool
+
     def __init__(self, name: str, stockvalue: float, strikeprice: float,
-                 r: float, upnode, downnode):
+                 r: float, upnode, downnode, compound="discretely"):
         """A vanilla init function."""
 
         self.__name = name
@@ -61,6 +66,13 @@ class BinomialNode:
 
         assert r >= 0 and r < 1
         self.__r = r
+
+        if compound == "discretely":
+            self.__discrete = True
+        elif compound == "continously":
+            self.__discrete = False
+        else:
+            raise ValueError("Wrong value for argument 'compound'.")
 
         assert (downnode is None) == (upnode is None), \
                "Both children should be None or both set."
@@ -96,8 +108,10 @@ class BinomialNode:
         V = amount * self.__upnode.stockvalue - call_up
         print(f"{self.__name}: Portfolio value is {V}.")
 
-        # We discount one time period discretely, to present value.
-        PV = V / (1 + self.__r)
+        if self.__discrete:
+            PV = V / (1 + self.__r)
+        else:
+            PV = V * math.exp(-self.__r * 1)
 
         # The amount of the stock value.
         owned_stockvalue = amount * self.stockvalue
@@ -152,19 +166,22 @@ def main() -> None:
                            strikeprice=21,
                            r=0.04,
                            upnode=None,
-                           downnode=None)
+                           downnode=None,
+                           compound="continously")
     hull_nd = BinomialNode("D",
                            stockvalue=18,
                            strikeprice=21,
                            r=0.04,
                            upnode=None,
-                           downnode=None)
+                           downnode=None,
+                           compound="continously")
     hull_np = BinomialNode("P",
                            stockvalue=20,
                            strikeprice=21,
                            r=0.04,
                            upnode=hull_nu,
-                           downnode=hull_nd)
+                           downnode=hull_nd,
+                           compound="continously")
 
     hull_price = hull_np.option_price()
     print(f"Option price for Hull fig. 31.1: {hull_price}")
@@ -180,37 +197,43 @@ def main() -> None:
                       strikeprice=21,
                       r=0.04,
                       upnode=None,
-                      downnode=None)
+                      downnode=None,
+                      compound="continously")
     nE = BinomialNode("E",
                       stockvalue=19.8,
                       strikeprice=21,
                       r=0.04,
                       upnode=None,
-                      downnode=None)
+                      downnode=None,
+                      compound="continously")
     nF = BinomialNode("F",
                       stockvalue=16.2,
                       strikeprice=21,
                       r=0.04,
                       upnode=None,
-                      downnode=None)
+                      downnode=None,
+                      compound="continously")
     nB = BinomialNode("B",
                       stockvalue=22,
                       strikeprice=21,
                       r=0.04,
                       upnode=nD,
-                      downnode=nE)
+                      downnode=nE,
+                      compound="continously")
     nC = BinomialNode("C",
                       stockvalue=18,
                       strikeprice=21,
                       r=0.04,
                       upnode=nE,
-                      downnode=nF)
+                      downnode=nF,
+                      compound="continously")
     nA = BinomialNode("A",
                       stockvalue=20,
                       strikeprice=21,
                       r=0.04,
                       upnode=nB,
-                      downnode=nC)
+                      downnode=nC,
+                      compound="continously")
 
     # 2. We compute our result
     nA_optionprice = nA.option_price()
