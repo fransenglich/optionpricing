@@ -53,7 +53,7 @@ class BinomialNode:
     # The discount rate
     __r = 0.0
 
-    # Whether to compound continously or discretely.
+    # Whether to compound continously or discretely
     __discrete: bool
 
     def __init__(self, name: str, stockvalue: float, strikeprice: float,
@@ -97,7 +97,7 @@ class BinomialNode:
         call_up = self.__upnode.option_price()
         call_down = self.__downnode.option_price()
 
-        # The amount of shares for our riskless portfolio.
+        # The amount of shares for our riskless portfolio
         amount = (call_up - call_down) / (self.__upnode.stockvalue -
                                           self.__downnode.stockvalue)
         print(f"{self.__name}: The stock amount is {amount}.")
@@ -113,7 +113,7 @@ class BinomialNode:
         else:
             PV = V * math.exp(-self.__r * 1)
 
-        # The amount of the stock value.
+        # The amount of the stock value
         owned_stockvalue = amount * self.stockvalue
 
         call_value = owned_stockvalue - PV
