@@ -39,6 +39,37 @@ class TestBinomialNode(unittest.TestCase):
 
         self.assertEqual(round(ytprice, 2), 6.35)
 
+    # We test a call option in one step. See Hull (2022), figure 13.1.
+    def test_Hull31(self):
+        hull_nu = BinomialNode("U",
+                               stockvalue=22,
+                               strikeprice=21,
+                               r=0.04,
+                               upnode=None,
+                               downnode=None,
+                               compound="continously",
+                               T=0.25)
+        hull_nd = BinomialNode("D",
+                               stockvalue=18,
+                               strikeprice=21,
+                               r=0.04,
+                               upnode=None,
+                               downnode=None,
+                               compound="continously",
+                               T=0.25)
+        hull_np = BinomialNode("P",
+                               stockvalue=20,
+                               strikeprice=21,
+                               r=0.04,
+                               upnode=hull_nu,
+                               downnode=hull_nd,
+                               compound="continously",
+                               T=0.25)
+
+        hull_price = hull_np.option_price()
+
+        self.assertEqual(round(hull_price, 3), 0.545)
+
 
 if __name__ == "__main__":
     unittest.main()

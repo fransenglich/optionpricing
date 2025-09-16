@@ -130,36 +130,6 @@ class BinomialNode:
 
 def main() -> None:
 
-    print("----------- Call option, one step Hull fig. 13.1. --------------")
-    hull_nu = BinomialNode("U",
-                           stockvalue=22,
-                           strikeprice=21,
-                           r=0.04,
-                           upnode=None,
-                           downnode=None,
-                           compound="continously",
-                           T=0.25)
-    hull_nd = BinomialNode("D",
-                           stockvalue=18,
-                           strikeprice=21,
-                           r=0.04,
-                           upnode=None,
-                           downnode=None,
-                           compound="continously",
-                           T=0.25)
-    hull_np = BinomialNode("P",
-                           stockvalue=20,
-                           strikeprice=21,
-                           r=0.04,
-                           upnode=hull_nu,
-                           downnode=hull_nd,
-                           compound="continously",
-                           T=0.25)
-
-    hull_price = hull_np.option_price()
-    print(f"Option price for Hull fig. 31.1: {hull_price}")
-    # Our computed stock amount, portfolio value and option price
-    # matches Hull
 
     print("----------- Call option, two steps. --------------")
     # We run the example in Hull (2022) p. 295, figure 13.4.
