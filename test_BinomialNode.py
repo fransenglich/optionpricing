@@ -70,6 +70,62 @@ class TestBinomialNode(unittest.TestCase):
 
         self.assertEqual(round(hull_price, 3), 0.545)
 
+    # We run the example in Hull (2022) p. 295, figure 13.4.
+    def test_Hull134(self):
+        nD = BinomialNode("D",
+                          stockvalue=24.2,
+                          strikeprice=21,
+                          r=0.04,
+                          upnode=None,
+                          downnode=None,
+                          compound="continously",
+                          T=0.25)
+        nE = BinomialNode("E",
+                          stockvalue=19.8,
+                          strikeprice=21,
+                          r=0.04,
+                          upnode=None,
+                          downnode=None,
+                          compound="continously",
+                          T=0.25)
+        nF = BinomialNode("F",
+                          stockvalue=16.2,
+                          strikeprice=21,
+                          r=0.04,
+                          upnode=None,
+                          downnode=None,
+                          compound="continously",
+                          T=0.25)
+        nB = BinomialNode("B",
+                          stockvalue=22,
+                          strikeprice=21,
+                          r=0.04,
+                          upnode=nD,
+                          downnode=nE,
+                          compound="continously",
+                          T=0.25)
+        nC = BinomialNode("C",
+                          stockvalue=18,
+                          strikeprice=21,
+                          r=0.04,
+                          upnode=nE,
+                          downnode=nF,
+                          compound="continously",
+                          T=0.25)
+        nA = BinomialNode("A",
+                          stockvalue=20,
+                          strikeprice=21,
+                          r=0.04,
+                          upnode=nB,
+                          downnode=nC,
+                          compound="continously",
+                          T=0.25)
+
+        # 2. We compute our result
+        nA_optionprice = nA.option_price()
+
+        self.assertEqual(round(nA_optionprice, 4), 0.9497)
+
 
 if __name__ == "__main__":
     unittest.main()
