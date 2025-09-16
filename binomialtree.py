@@ -48,7 +48,7 @@ class BinomialNode:
     __upnode = None
     __downnode = None
 
-    # Our discount rate
+    # The discount rate
     __r = 0.0
 
     def __init__(self, name: str, stockvalue: float, strikeprice: float,
@@ -59,9 +59,11 @@ class BinomialNode:
         self.stockvalue = stockvalue
         self.__strikeprice = strikeprice
 
+        assert r >= 0 and r < 1
         self.__r = r
-        assert self.__r > 0 and self.__r < 1
 
+        assert (downnode is None) == (upnode is None), \
+               "Both children should be None or both set."
         self.__upnode = upnode
         self.__downnode = downnode
 
@@ -70,7 +72,6 @@ class BinomialNode:
         binomial tree."""
 
         if not self.__upnode:
-            assert not self.__downnode, "Both children should be None."
             # We're a leaf.
 
             # (We for now assume we're a call option.)
