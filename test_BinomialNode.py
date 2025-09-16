@@ -70,7 +70,7 @@ class TestBinomialNode(unittest.TestCase):
 
         self.assertEqual(round(hull_price, 3), 0.545)
 
-    # We run the example in Hull (2022) p. 295, figure 13.4.
+    # We test the example in Hull (2022) p. 295, figure 13.4.
     def test_Hull134(self):
         nD = BinomialNode("D",
                           stockvalue=24.2,

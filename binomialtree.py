@@ -23,8 +23,6 @@ import math
 # is the initial intrinsic value.
 #
 # The tree is recombinant, reducing the number of nodes.
-#
-# You need to take into account discounting
 
 class BinomialNode:
     """
@@ -33,7 +31,7 @@ class BinomialNode:
     It has the public variable stockvalue, and the central member function
     option_price().
 
-    It has been verified for two time periods, t=0 and t=1.
+    See the test cases in class TestBinomialNode.
 
     Some of the material used:
 
