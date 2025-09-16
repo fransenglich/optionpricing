@@ -140,6 +140,27 @@ def main() -> None:
     # The computed values matches the example on Youtube.
     print(f"Option price for Youtube-example: {ytprice}")
 
+    print("----------- Call option, one step Hull fig. 13.1. --------------")
+    hull_nu = BinomialNode("U",
+                           stockvalue=22,
+                           strikeprice=21,
+                           upnode=None,
+                           downnode=None)
+    hull_nd = BinomialNode("D",
+                           stockvalue=18,
+                           strikeprice=21,
+                           upnode=None,
+                           downnode=None)
+    hull_np = BinomialNode("P",
+                           stockvalue=20,
+                           strikeprice=21,
+                           upnode=hull_nu,
+                           downnode=hull_nd)
+
+    hull_price = hull_np.option_price()
+    print(f"Option price for Hull fig. 31.1: {hull_price}")
+    # Our computed stock amount and portfolio value matches Hull.
+
     print("----------- Call option, two steps. --------------")
     # We run the example in Hull (2022) p. 295, figure 13.4.
 
