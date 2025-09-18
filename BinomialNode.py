@@ -124,4 +124,3 @@ class BinomialNode:
         print(f"{self.__name}: The option value is {call_value}.")
 
         return call_value
-

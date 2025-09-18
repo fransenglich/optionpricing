@@ -3,13 +3,15 @@ import unittest
 from BinomialNode import BinomialNode
 
 
-# Runs various found examples of option pricing
-# using binomial trees.
 class TestBinomialNode(unittest.TestCase):
+    """Runs various found examples of option pricing
+    using binomial trees.
+    """
 
-    # We test the example in:
-    # https://www.youtube.com/watch?v=AukJ1gDeErw
     def test_Youtube(self):
+        """We test the example in:
+            https://www.youtube.com/watch?v=AukJ1gDeErw
+        """
         nu = BinomialNode("U",
                           stockvalue=48,
                           strikeprice=38,
@@ -39,8 +41,9 @@ class TestBinomialNode(unittest.TestCase):
 
         self.assertEqual(round(ytprice, 2), 6.35)
 
-    # We test a call option in one step. See Hull (2022), figure 13.1.
     def test_Hull31(self):
+        """We test a call option in one step. See Hull (2022), figure 13.1."""
+
         hull_nu = BinomialNode("U",
                                stockvalue=22,
                                strikeprice=21,
@@ -70,8 +73,9 @@ class TestBinomialNode(unittest.TestCase):
 
         self.assertEqual(round(hull_price, 3), 0.545)
 
-    # We test the example in Hull (2022) p. 295, figure 13.4.
     def test_Hull134(self):
+        """We test the example in Hull (2022) p. 295, figure 13.4."""
+
         nD = BinomialNode("D",
                           stockvalue=24.2,
                           strikeprice=21,
