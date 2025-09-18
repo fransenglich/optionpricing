@@ -3,7 +3,7 @@ import unittest
 from blackscholes import blackscholes
 
 
-class Test_blackscholes(unittest.TestCase):
+class Testblackscholes(unittest.TestCase):
     """
     """
 
