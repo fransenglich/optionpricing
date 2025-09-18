@@ -1,6 +1,6 @@
 import unittest
 
-from binomialtree import BinomialNode
+from BinomialNode import BinomialNode
 
 
 # Runs various found examples of option pricing
