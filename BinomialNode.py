@@ -60,7 +60,7 @@ class BinomialNode:
     def __init__(self, name: str, stockvalue: float, strikeprice: float,
                  r: float, upnode, downnode, compound="discretely",
                  T: float = 1):
-        """A vanilla init function."""
+        """An init function with some checks."""
 
         self.__name = name
         self.stockvalue = stockvalue

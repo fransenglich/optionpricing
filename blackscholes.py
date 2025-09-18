@@ -2,14 +2,16 @@ import numpy as np
 from scipy.stats import norm
 
 
-def black_scholes(asset_price: float,
-                  strike_price: float,
-                  time_expiration: float,
-                  risk_free: float,
-                  volatility: float,
-                  iscall: bool) -> float:
-    """An implementation of the Black-Scholes-Merton (BSM) equation for option
-    pricing.
+def blackscholes(asset_price: float,
+                 strike_price: float,
+                 time_expiration: float,
+                 risk_free: float,
+                 volatility: float,
+                 iscall: bool) -> float:
+    """A closed-form implementation of the Black-Scholes-Merton (BSM) equation
+    for option pricing.
+
+    It is essentially a numerical implementation of the equation.
 
     Sources used:
     - An extensive source is John C. Hull (2022). Options, Futures and Other
@@ -45,24 +47,3 @@ def black_scholes(asset_price: float,
             - \
             asset_price * np.exp(-q * time_expiration) * norm.cdf(-d1)
         return P
-
-
-def main() -> None:
-    # We run https://www.mystockoptions.com/black-scholes.cfm
-    # which for the below values returns 7.366.
-    # This calculator yields the same (7.37):
-    # https://www.omnicalculator.com/finance/black-scholes"""
-    mystock = black_scholes(14, 10, 3.5, 0.05, 0.5, iscall=True)
-
-    # Prints 7.36487751. Same as the two calculators.
-    print(f"Call option price: {mystock}")
-
-    # Now let's run for a put. The second calculator above yields 5.49.
-    omnicalculator = black_scholes(100, 80, 2, 0.03, 0.3, iscall=False)
-
-    # Prints 4.899. Is hence wrong and not validated by the calculator.
-    print(f"Put option price: {omnicalculator}")
-
-
-if __name__ == "__main__":
-    main()
