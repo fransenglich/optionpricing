@@ -48,7 +48,7 @@ def mc_optionprice(S0: float,
     - https://en.wikipedia.org/wiki/Brownian_motion
     """
 
-    N = 100
+    N = 1000
     C = np.empty(N)
 
     for i in range(N):
