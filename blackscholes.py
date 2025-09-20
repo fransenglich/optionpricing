@@ -14,8 +14,7 @@ def blackscholes(asset_price: float,
     It is essentially a numerical implementation of the equation.
 
     Sources used:
-    - An extensive source is John C. Hull (2022). Options, Futures and Other
-      Derivatives.
+    - John C. Hull (2022). Options, Futures and Other Derivatives.
     - https://www.macroption.com/black-scholes-formula/
     - https://www.omnicalculator.com/finance/black-scholes#how-to-calculate-black-scholes-model-black-scholes-formula
     """
@@ -31,7 +30,6 @@ def blackscholes(asset_price: float,
 
     # Note: We use the CDF, not a random Gaussian dist., because we're closed
     # form. See Hull (2022), page 353.
-    C = 0.0
 
     if iscall:
         C = asset_price * norm.cdf(d1) - \
