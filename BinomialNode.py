@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 
 # Underlying asset moves by factor u or d:
@@ -124,3 +125,58 @@ class BinomialNode:
         print(f"{self.__name}: The option value is {call_value}.")
 
         return call_value
+
+
+class MCBinomonialNode(BinomialNode):
+    """Implements option price using a Monte Carlo method.
+
+    Wikipedia has good content on this:
+    - https://en.wikipedia.org/wiki/Monte_Carlo_methods_for_option_pricing
+    - https://en.wikipedia.org/wiki/Brownian_motion
+    """
+
+    def S(self, S_prev) -> float:
+        """Computes a stock price by drawing from a random normal distribution,
+        while assuming a geometric Brownian motion.
+        """
+
+        mu = 0.4  # Constant drift, expected rate of return
+        sigma = 0.3  # Volatility, SD, assumed constant
+        M = 10_000  # Number of simulations
+        S_0 = 30  # Initial stock value # TODO set
+        t = 1  # TODO
+
+        # Z ~ N(0, 1)
+        Z = np.random.randm(M)
+
+        # For one step, not path
+        S = S_prev * np.exp((mu - 0.5 * sigma ** 2) * t +
+                            sigma * np.sqrt(t) * Z)
+
+        return S
+
+
+def generate_stock_returns():
+    """Generates and returns our sequence of stock returns, according to a
+    simulated geometric Brownian motion."""
+
+    S0 = 100.0
+    mu = 0.05
+    sigma = 0.2
+    T = 1.0
+    N = 252
+    dt = T / N
+
+    S = np.empty(N + 1)
+    S[0] = S0
+
+    for i in range(N):
+        Z = np.random.normal()
+        S[i + 1] = S[i] * np.exp((mu - 0.5 * sigma ** 2) *
+                                 dt + sigma * np.sqrt(dt)*Z)
+
+    return S
+
+
+def test():
+    pass
