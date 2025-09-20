@@ -127,11 +127,12 @@ class BinomialNode:
         return call_value
 
 
-class MCBinomonialNode(BinomialNode):
+class MCBinomonialNode:
     """Implements option price using a Monte Carlo method.
 
     Wikipedia has good content on this:
     - https://en.wikipedia.org/wiki/Monte_Carlo_methods_for_option_pricing
+    - https://en.wikipedia.org/wiki/Rational_pricing#Risk_neutral_valuation
     - https://en.wikipedia.org/wiki/Brownian_motion
     """
 
@@ -143,7 +144,7 @@ class MCBinomonialNode(BinomialNode):
         mu = 0.4  # Constant drift, expected rate of return
         sigma = 0.3  # Volatility, SD, assumed constant
         M = 10_000  # Number of simulations
-        S_0 = 30  # Initial stock value # TODO set
+        # S_0 = 30  # Initial stock value # TODO set
         t = 1  # TODO
 
         # Z ~ N(0, 1)
@@ -156,7 +157,7 @@ class MCBinomonialNode(BinomialNode):
         return S
 
 
-def generate_stock_returns():
+def generate_path():
     """Generates and returns our sequence of stock returns, according to a
     simulated geometric Brownian motion."""
 
