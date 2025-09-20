@@ -27,7 +27,25 @@ def mc_optionprice(S0: float,
                    sigma: float,
                    t: float,
                    r: float,
-                   strike_price: float) -> float):
+                   strike_price: float) -> float:
+    """Implements option price using a Monte Carlo method.
+
+    Assumes it's a call.
+
+    Arguments:
+    - S0: initial stock price
+    - mu: Constant drift, expected rate of return
+    - sigma: Volatility, SD, assumed constant
+    - t: TODO
+    - r: risk-free discount rate
+    - strike_price: the option's strike price
+
+    Wikipedia has good content on this:
+    - https://en.wikipedia.org/wiki/Monte_Carlo_methods_for_option_pricing
+    - https://en.wikipedia.org/wiki/Rational_pricing#Risk_neutral_valuation
+    - https://en.wikipedia.org/wiki/Brownian_motion
+    """
+
     S0 = 100.0
     mu = 0.05
     sigma = 0.2
@@ -49,5 +67,3 @@ def mc_optionprice(S0: float,
     discounted = avg * np.exp(r * t)
 
     return discounted
-
-

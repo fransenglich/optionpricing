@@ -20,19 +20,11 @@ class TestMC_optionprice(unittest.TestCase):
         t = 10
         r = 0.05
         asset_price = 14
+        strike_price = 10
 
-        price = mc_optionprice(assert_price, mu, sigma, t, r, strike_price)
+        price = mc_optionprice(asset_price, mu, sigma, t, r, strike_price)
 
-        self.assertEqual(round(mystock, 2), 7.36)
-
-
-    def test_put(self):
-        """Now let's run for a put. The second calculator above yields 5.49."""
-
-        omnicalculator = blackscholes(100, 80, 2, 0.03, 0.3, iscall=False)
-
-        # Prints 4.899. Is hence wrong and not validated by the calculator.
-        #self.assertEqual(round(omnicalculator, 2), 5.49)
+        self.assertEqual(round(price, 2), 7.36)
 
 
 if __name__ == "__main__":
