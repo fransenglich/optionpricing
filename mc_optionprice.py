@@ -35,7 +35,7 @@ def mc_optionprice(S0: float,
     Assumes it's a call option.
 
     Arguments:
-    - S0: initial stock price
+    - S0: Initial stock price
     - mu: Constant drift, expected rate of return
     - sigma: Volatility, SD, assumed constant
     - t: TODO
