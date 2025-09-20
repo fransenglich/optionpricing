@@ -16,7 +16,8 @@ def blackscholes(asset_price: float,
     Sources used:
     - John C. Hull (2022). Options, Futures and Other Derivatives.
     - https://www.macroption.com/black-scholes-formula/
-    - https://www.omnicalculator.com/finance/black-scholes#how-to-calculate-black-scholes-model-black-scholes-formula
+    - https://www.omnicalculator.com/finance/black-scholes\
+            #how-to-calculate-black-scholes-model-black-scholes-formula
     """
 
     # Dividing the equation into the parts d1, d2, C, and P is customary for
