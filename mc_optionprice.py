@@ -59,6 +59,6 @@ def mc_optionprice(S0: float,
         C[i] = max(S_last - strike_price, 0)
 
     avg = C.mean()
-    discounted = avg * np.exp(r * t)
+    discounted = avg * np.exp(-r * t)
 
     return discounted
