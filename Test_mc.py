@@ -8,8 +8,8 @@ class TestMC_optionprice(unittest.TestCase):
     Tests the Monte Carlo implementation for option pricing.
     """
 
-    def test_mystockoptions(self):
-        """We run and compare against:
+    def test_basic(self):
+        """We run and compare against the result from:
         https://www.omnicalculator.com/finance/black-scholes
         """
 
