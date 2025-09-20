@@ -18,8 +18,8 @@ def __generate_price_path(S0: float,
 
     for i in range(N):
         Z = np.random.normal()
-        S[i + 1] = S[i] * np.exp((mu - 0.5 * sigma ** 2) *
-                                 dt + sigma * np.sqrt(dt)*Z)
+        S[i + 1] = S[i] * np.exp((mu - 0.5 * sigma ** 2) * dt +
+                                 sigma * np.sqrt(dt) * Z)
 
     return S
 
