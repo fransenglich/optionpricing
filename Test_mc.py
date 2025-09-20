@@ -5,6 +5,7 @@ from mc_optionprice import mc_optionprice
 
 class TestMC_optionprice(unittest.TestCase):
     """
+    Tests the Monte Carlo implementation for option pricing.
     """
 
     def test_mystockoptions(self):
@@ -14,7 +15,6 @@ class TestMC_optionprice(unittest.TestCase):
         https://www.omnicalculator.com/finance/black-scholes
         """
 
-        # mystock = blackscholes(14, 10, 3.5, 0.05, 0.5, iscall=True)
         mu = 0.4
         sigma = 0.5
         t = 10

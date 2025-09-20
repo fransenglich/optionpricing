@@ -6,7 +6,9 @@ def __generate_price_path(S0: float,
                           sigma: float,
                           t: float):
     """Generates and returns our sequence of stock returns, according to a
-    simulated geometric Brownian motion."""
+    simulated geometric Brownian motion.
+
+    Private helper function."""
 
     N = 252
     dt = t / N
@@ -30,7 +32,7 @@ def mc_optionprice(S0: float,
                    strike_price: float) -> float:
     """Implements option price using a Monte Carlo method.
 
-    Assumes it's a call.
+    Assumes it's a call option.
 
     Arguments:
     - S0: initial stock price
@@ -46,13 +48,6 @@ def mc_optionprice(S0: float,
     - https://en.wikipedia.org/wiki/Brownian_motion
     """
 
-    S0 = 100.0
-    mu = 0.05
-    sigma = 0.2
-    t = 1.0
-    r = 0.04
-
-    strike_price = 120
     N = 100
     C = np.empty(N)
 
