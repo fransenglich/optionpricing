@@ -55,7 +55,7 @@ class BinomialNode:
     # Whether to compound continously or discretely
     __discrete: bool
 
-    # T
+    # t
     __T: float
 
     def __init__(self, name: str, stockvalue: float, strikeprice: float,
@@ -157,16 +157,15 @@ class MCBinomonialNode:
         return S
 
 
-def generate_path():
+def __generate_price_path(S0: float,
+                          mu: float,
+                          sigma: float,
+                          t: float):
     """Generates and returns our sequence of stock returns, according to a
     simulated geometric Brownian motion."""
 
-    S0 = 100.0
-    mu = 0.05
-    sigma = 0.2
-    T = 1.0
     N = 252
-    dt = T / N
+    dt = t / N
 
     S = np.empty(N + 1)
     S[0] = S0
@@ -179,5 +178,36 @@ def generate_path():
     return S
 
 
-def test():
-    pass
+def mc_optionprice(S0: float,
+                   mu: float,
+                   sigma: float,
+                   t: float,
+                   r: float) -> float):
+    S0 = 100.0
+    mu = 0.05
+    sigma = 0.2
+    t = 1.0
+    r = 0.04
+
+    strike_price = 120
+    N = 100
+    C = np.empty(N)
+
+    for i in range(N):
+        path = __generate_price_path(S0, mu, sigma, t)
+        S_last = path[-1]
+
+        # We calculate the call's value:
+        C[i] = max(S_last - strike_price, 0)
+
+    avg = C.mean()
+    discounted = avg * np.exp(r * t)
+
+    return discounted
+
+
+def main():
+    test()
+
+
+main()
