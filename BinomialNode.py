@@ -26,7 +26,7 @@ import math
 
 class BinomialNode:
     """
-    A node in a binomial tree for option pricing.
+    A node in a binomial tree for option pricing of European options.
 
     It has the public variable stockvalue, and the central member function
     option_price().
