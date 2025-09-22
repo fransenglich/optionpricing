@@ -3,4 +3,4 @@ implementations of option pricing using:
 
 - Binomial tree
 - Closed form Black-Scholes
-- Open form, Monte Carlo implementation (WIP)
+- Open form, Monte Carlo implementation

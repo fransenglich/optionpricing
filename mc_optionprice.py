@@ -8,6 +8,9 @@ def __generate_price_path(S0: float,
     """Generates and returns our sequence of stock returns, according to a
     simulated geometric Brownian motion.
 
+    We return returns not prices, and as drift we don't use expected return,
+    but instead the risk-free.
+
     Private helper function."""
 
     N = 252
@@ -25,18 +28,16 @@ def __generate_price_path(S0: float,
 
 
 def mc_optionprice(S0: float,
-                   mu: float,
                    sigma: float,
                    t: float,
                    r: float,
                    strike_price: float) -> float:
     """Implements option price using a Monte Carlo method.
 
-    Assumes it's a call option.
+    Assumes it's a European call option.
 
     Arguments:
     - S0: Initial stock price
-    - mu: Constant drift, expected rate of return
     - sigma: Volatility, SD, assumed constant
     - t: TODO
     - r: risk-free discount rate
@@ -48,7 +49,7 @@ def mc_optionprice(S0: float,
     - https://en.wikipedia.org/wiki/Brownian_motion
     """
 
-    N = 1000
+    N = 10_000
     C = np.empty(N)
 
     for i in range(N):
