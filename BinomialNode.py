@@ -29,7 +29,8 @@ class BinomialNode:
     A node in a binomial tree for option pricing of European options.
 
     It has the public variable stockvalue, and the central member function
-    option_price().
+    option_price(). The conceptuals are a bit clouded by the non-essential
+    features for selection discounting method and pretty printing.
 
     See the test cases in class TestBinomialNode.
 
@@ -57,8 +58,13 @@ class BinomialNode:
     # t
     __T: float
 
-    def __init__(self, name: str, stockvalue: float, strikeprice: float,
-                 r: float, upnode, downnode, compound="discretely",
+    def __init__(self, name: str,
+                 stockvalue: float,
+                 strikeprice: float,
+                 r: float,
+                 upnode,
+                 downnode,
+                 compound="discretely",
                  T: float = 1):
         """An init function with some checks."""
 
