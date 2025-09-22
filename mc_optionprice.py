@@ -2,8 +2,8 @@ import numpy as np
 
 
 def __generate_price_path(S0: float,
-                          mu: float,
                           sigma: float,
+                          r: float,
                           t: float):
     """Generates and returns our sequence of stock returns, according to a
     simulated geometric Brownian motion.
@@ -18,7 +18,7 @@ def __generate_price_path(S0: float,
 
     for i in range(N):
         Z = np.random.normal()
-        S[i + 1] = S[i] * np.exp((mu - 0.5 * sigma ** 2) * dt +
+        S[i + 1] = S[i] * np.exp((r - 0.5 * sigma ** 2) * dt +
                                  sigma * np.sqrt(dt) * Z)
 
     return S
@@ -52,7 +52,7 @@ def mc_optionprice(S0: float,
     C = np.empty(N)
 
     for i in range(N):
-        path = __generate_price_path(S0, mu, sigma, t)
+        path = __generate_price_path(S0, sigma, r, t)
         S_last = path[-1]
 
         # We calculate the call's value:
