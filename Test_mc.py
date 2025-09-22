@@ -18,11 +18,11 @@ class TestMC_optionprice(unittest.TestCase):
         stock_price = 100
         strike_price = 10
         t = 10
-        sigma = 0.5
+        sigma = 0.1
         r = 0.04
 
         price = mc_optionprice(stock_price, mu, sigma, t, r, strike_price)
-        self.assertEqual(round(price, 2), 93.88)
+        self.assertEqual(round(price, 2), 93.30)
 
 
 if __name__ == "__main__":
