@@ -1,29 +1,6 @@
 import math
 
 
-# Underlying asset moves by factor u or d:
-#   u >= 1
-#   0 < d <= 1
-#
-# S is underlying price.
-#
-# The price in the next period is either:
-#   S_up = S * u
-#   S_down = S * d
-#
-# Further:
-#   u = e^(sigma * sqrt(delta t))
-#   d = 1 / d
-#
-# The leaves has the value of the intrinsic value:
-#   Call option: max(S_n - K, 0)
-#   Put option: max(K - S_n, 0)
-#
-# K is the option's strike price, S_n is spot price of asset at period n. S_0
-# is the initial intrinsic value.
-#
-# The tree is recombinant, reducing the number of nodes.
-
 class BinomialNode:
     """
     A node in a binomial tree for option pricing of European options.
