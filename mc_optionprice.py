@@ -1,17 +1,15 @@
 import numpy as np
 
 
-def __generate_price_path(S0: float,
-                          sigma: float,
-                          r: float,
-                          t: float):
+def __generate_brownian_path(S0: float,
+                             sigma: float,
+                             r: float,
+                             t: float):
     """Generates and returns our sequence of stock returns, according to a
     simulated geometric Brownian motion.
 
-    We return returns not prices, and as drift we don't use expected return,
-    but instead the risk-free.
-
-    Private helper function."""
+    We return returns not prices, and as drift we use as the expected return
+    the risk-free rate."""
 
     N = 252
     dt = t / N
@@ -53,7 +51,7 @@ def mc_optionprice(S0: float,
     C = np.empty(N)
 
     for i in range(N):
-        path = __generate_price_path(S0, sigma, r, t)
+        path = __generate_brownian_path(S0, sigma, r, t)
         S_last = path[-1]
 
         # We calculate the call's value:
