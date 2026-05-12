@@ -8,17 +8,28 @@ def __generate_brownian_path(S0: float,
     """Generates and returns our sequence of stock returns, according to a
     simulated geometric Brownian motion.
 
-    We return returns not prices, and as drift we use as the expected return
-    the risk-free rate."""
+    We return a numpy vector of returns not prices, and as drift we use as the
+    expected return the risk-free rate.
+
+    Arguments:
+    - S0: initial stock price
+    - sigma: volatility
+    - r: expected return
+    - t: number of time units
+    """
 
     N = 252
-    dt = t / N
+    dt = t / N  # The time increment
 
     S = np.empty(N + 1)
     S[0] = S0
 
     for i in range(N):
         Z = np.random.normal()
+
+        # The new stock price consists of a drift and a stochastic shock, from
+        # the previous price. The drift is the return affected by volatility,
+        # the shock a draw from the normal distribution.
         S[i + 1] = S[i] * np.exp((r - 0.5 * sigma ** 2) * dt +
                                  sigma * np.sqrt(dt) * Z)
 
